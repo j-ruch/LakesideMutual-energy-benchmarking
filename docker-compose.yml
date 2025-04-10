@@ -1,0 +1,17 @@
+services:
+  mysql:
+    image: mysql:8
+    container_name: lakeside_mutual
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: sa
+      MYSQL_USER: sa
+      MYSQL_PASSWORD: sa
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d
+
+volumes:
+  mysql_data:
