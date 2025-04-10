@@ -1,0 +1,2569 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="LakesideMutual Load Generator">
+      <boolProp name="TestPlan.serialize_threadgroups">true</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="ENDPOINT_BASE" elementType="Argument">
+            <stringProp name="Argument.name">ENDPOINT_BASE</stringProp>
+            <stringProp name="Argument.value">${__P(ENDPOINT_BASE,localhost)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ENDPOINT_AUTH" elementType="Argument">
+            <stringProp name="Argument.name">ENDPOINT_AUTH</stringProp>
+            <stringProp name="Argument.value">${__P(ENDPOINT_AUTH,/auth)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ENDPOINT_USER" elementType="Argument">
+            <stringProp name="Argument.name">ENDPOINT_USER</stringProp>
+            <stringProp name="Argument.value">${__P(ENDPOINT_USER,/user)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ENDPOINT_CUSTOMERS" elementType="Argument">
+            <stringProp name="Argument.name">ENDPOINT_CUSTOMERS</stringProp>
+            <stringProp name="Argument.value">${__P(ENDPOINT_CUSTOMERS,/customers)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ENDPOINT_POLICIES" elementType="Argument">
+            <stringProp name="Argument.name">ENDPOINT_POLICIES</stringProp>
+            <stringProp name="Argument.value">${__P(ENDPOINT_POLICIES,/policies)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ENDPOINT_INSURANCE_QUOTES" elementType="Argument">
+            <stringProp name="Argument.name">ENDPOINT_INSURANCE_QUOTES</stringProp>
+            <stringProp name="Argument.value">${__P(ENDPOINT_INSURANCE_QUOTES,/insurance-quote-requests)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ENDPOINT_INTERACTION_LOGS" elementType="Argument">
+            <stringProp name="Argument.name">ENDPOINT_INTERACTION_LOGS</stringProp>
+            <stringProp name="Argument.value">${__P(ENDPOINT_INTERACTION_LOGS,/interaction-logs)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ENDPOINT_NOTIFICATIONS" elementType="Argument">
+            <stringProp name="Argument.name">ENDPOINT_NOTIFICATIONS</stringProp>
+            <stringProp name="Argument.value">${__P(ENDPOINT_NOTIFICATIONS,/notifications)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ENDPOINT_PROTOCOL" elementType="Argument">
+            <stringProp name="Argument.name">ENDPOINT_PROTOCOL</stringProp>
+            <stringProp name="Argument.value">${__P(ENDPOINT_PROTOCOL,http)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ENDPOINT_PORT_CUSTOMER_MANAGEMENT" elementType="Argument">
+            <stringProp name="Argument.name">ENDPOINT_PORT_CUSTOMER_MANAGEMENT</stringProp>
+            <stringProp name="Argument.value">${__P(ENDPOINT_PORT_CUSTOMER_MANAGEMENT,8100)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ENDPOINT_PORT_POLICY_MANAGEMENT" elementType="Argument">
+            <stringProp name="Argument.name">ENDPOINT_PORT_POLICY_MANAGEMENT</stringProp>
+            <stringProp name="Argument.value">${__P(ENDPOINT_PORT_POLICY_MANAGEMENT,8090)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ENDPOINT_PORT_CUSTOMER_SELF_SERVICE" elementType="Argument">
+            <stringProp name="Argument.name">ENDPOINT_PORT_CUSTOMER_SELF_SERVICE</stringProp>
+            <stringProp name="Argument.value">${__P(ENDPOINT_PORT_CUSTOMER_SELF_SERVICE,8080)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </elementProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+    </TestPlan>
+    <hashTree>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="firstname" elementType="Argument">
+            <stringProp name="Argument.name">firstname</stringProp>
+            <stringProp name="Argument.value">FIRSTNAME</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="lastname" elementType="Argument">
+            <stringProp name="Argument.name">lastname</stringProp>
+            <stringProp name="Argument.value">LASTNAME</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+        <collectionProp name="HeaderManager.headers">
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">accept</stringProp>
+            <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+          </elementProp>
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">content-type</stringProp>
+            <stringProp name="Header.value">application/json</stringProp>
+          </elementProp>
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">X-Auth-Token</stringProp>
+            <stringProp name="Header.value">${token}</stringProp>
+          </elementProp>
+        </collectionProp>
+      </HeaderManager>
+      <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Workflow Reject Insurance Quote Request" enabled="false">
+        <intProp name="ThreadGroup.num_threads">5</intProp>
+        <intProp name="ThreadGroup.ramp_time">0</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <stringProp name="LoopController.loops">48</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="Random Parameters">
+          <collectionProp name="UserParameters.names">
+            <stringProp name="2020068664">moneyAmount</stringProp>
+            <stringProp name="-2129778896">startDate</stringProp>
+            <stringProp name="-1607727319">endDate</stringProp>
+          </collectionProp>
+          <collectionProp name="UserParameters.thread_values">
+            <collectionProp name="325044195">
+              <stringProp name="-1868052610">${__Random(0,9999)}</stringProp>
+              <stringProp name="836410989">${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;)}</stringProp>
+              <stringProp name="788460695">${__timeShift(yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;,,P365D,,)}</stringProp>
+            </collectionProp>
+          </collectionProp>
+          <boolProp name="UserParameters.per_iteration">false</boolProp>
+        </UserParameters>
+        <hashTree/>
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Counter" enabled="true">
+          <stringProp name="CounterConfig.start">1</stringProp>
+          <stringProp name="CounterConfig.end">99999</stringProp>
+          <stringProp name="CounterConfig.incr">1</stringProp>
+          <stringProp name="CounterConfig.name">counter</stringProp>
+          <stringProp name="CounterConfig.format">00000</stringProp>
+          <boolProp name="CounterConfig.per_user">false</boolProp>
+        </CounterConfig>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST Auth" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_AUTH}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;email&quot;: &quot;admin@example.com&quot;,&#xd;
+  &quot;password&quot;: &quot;1password&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Token" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">token</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.token</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET User" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_USER}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Customer Id" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">customerId</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.customerId</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Customer" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract City" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">city</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;city&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Street Address" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">streetAddress</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;streetAddress&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Postal Code" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">postalCode</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;postalCode&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Policies" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST Insureance Quote">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;statusHistory&quot;: [],&#xd;
+  &quot;customerInfo&quot;: {&#xd;
+    &quot;customerId&quot;: &quot;${customerId}&quot;,&#xd;
+    &quot;firstname&quot;: &quot;${firstname}&quot;,&#xd;
+    &quot;lastname&quot;: &quot;${lastname}&quot;,&#xd;
+    &quot;contactAddress&quot;: {&#xd;
+      &quot;streetAddress&quot;: &quot;${streetAddress}&quot;,&#xd;
+      &quot;postalCode&quot;: &quot;${postalCode}&quot;,&#xd;
+      &quot;city&quot;: &quot;${city}&quot;&#xd;
+    },&#xd;
+    &quot;billingAddress&quot;: {&#xd;
+      &quot;streetAddress&quot;: &quot;${streetAddress}&quot;,&#xd;
+      &quot;postalCode&quot;: &quot;${postalCode}&quot;,&#xd;
+      &quot;city&quot;: &quot;${city}&quot;&#xd;
+    }&#xd;
+  },&#xd;
+  &quot;insuranceOptions&quot;: {&#xd;
+    &quot;startDate&quot;: &quot;${startDate}&quot;,&#xd;
+    &quot;insuranceType&quot;: &quot;string&quot;,&#xd;
+    &quot;deductible&quot;: {&#xd;
+      &quot;amount&quot;: &quot;${moneyAmount}&quot;,&#xd;
+      &quot;currency&quot;: &quot;CHF&quot;&#xd;
+    }&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Insurance Id" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">insuranceId</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.id</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Policies" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer">
+            <stringProp name="ConstantTimer.delay">1000</stringProp>
+          </ConstantTimer>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quote">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PATCH Insureance Quotes" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">PATCH</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;status&quot;: &quot;REQUEST_REJECTED&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Workflow Reject Insurance Offer" enabled="false">
+        <intProp name="ThreadGroup.num_threads">5</intProp>
+        <intProp name="ThreadGroup.ramp_time">0</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <stringProp name="LoopController.loops">48</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="Random Parameters" enabled="true">
+          <collectionProp name="UserParameters.names">
+            <stringProp name="2020068664">moneyAmount</stringProp>
+            <stringProp name="-2129778896">startDate</stringProp>
+            <stringProp name="-1607727319">endDate</stringProp>
+          </collectionProp>
+          <collectionProp name="UserParameters.thread_values">
+            <collectionProp name="325044195">
+              <stringProp name="-1868052610">${__Random(0,9999)}</stringProp>
+              <stringProp name="836410989">${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;)}</stringProp>
+              <stringProp name="788460695">${__timeShift(yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;,,P365D,,)}</stringProp>
+            </collectionProp>
+          </collectionProp>
+          <boolProp name="UserParameters.per_iteration">false</boolProp>
+        </UserParameters>
+        <hashTree/>
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Counter" enabled="true">
+          <stringProp name="CounterConfig.start">1</stringProp>
+          <stringProp name="CounterConfig.end">99999</stringProp>
+          <stringProp name="CounterConfig.incr">1</stringProp>
+          <stringProp name="CounterConfig.name">counter</stringProp>
+          <stringProp name="CounterConfig.format">00000</stringProp>
+          <boolProp name="CounterConfig.per_user">false</boolProp>
+        </CounterConfig>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST Auth" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_AUTH}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;email&quot;: &quot;admin@example.com&quot;,&#xd;
+  &quot;password&quot;: &quot;1password&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Token" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">token</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.token</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET User" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_USER}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Customer Id" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">customerId</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.customerId</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Customer" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract City" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">city</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;city&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Street Address" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">streetAddress</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;streetAddress&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Postal Code" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">postalCode</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;postalCode&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Date" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">date</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][&apos;date&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract City" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">city</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;city&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Street Address" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">streetAddress</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;streetAddress&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Postal Code" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">postalCode</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;postalCode&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Policies" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Start Date" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">startDate</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][*][&apos;startDate&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract End Date" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">endDate</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][*][&apos;endDate&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST Insureance Quote" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;statusHistory&quot;: [],&#xd;
+  &quot;customerInfo&quot;: {&#xd;
+    &quot;customerId&quot;: &quot;${customerId}&quot;,&#xd;
+    &quot;firstname&quot;: &quot;${firstname}&quot;,&#xd;
+    &quot;lastname&quot;: &quot;${lastname}&quot;,&#xd;
+    &quot;contactAddress&quot;: {&#xd;
+      &quot;streetAddress&quot;: &quot;${streetAddress}&quot;,&#xd;
+      &quot;postalCode&quot;: &quot;${postalCode}&quot;,&#xd;
+      &quot;city&quot;: &quot;${city}&quot;&#xd;
+    },&#xd;
+    &quot;billingAddress&quot;: {&#xd;
+      &quot;streetAddress&quot;: &quot;${streetAddress}&quot;,&#xd;
+      &quot;postalCode&quot;: &quot;${postalCode}&quot;,&#xd;
+      &quot;city&quot;: &quot;${city}&quot;&#xd;
+    }&#xd;
+  },&#xd;
+  &quot;insuranceOptions&quot;: {&#xd;
+    &quot;startDate&quot;: &quot;${startDate}&quot;,&#xd;
+    &quot;insuranceType&quot;: &quot;string&quot;,&#xd;
+    &quot;deductible&quot;: {&#xd;
+      &quot;amount&quot;: &quot;${moneyAmount}&quot;,&#xd;
+      &quot;currency&quot;: &quot;CHF&quot;&#xd;
+    }&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Insurance Id" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">insuranceId</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.id</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Policies" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+            <stringProp name="ConstantTimer.delay">1000</stringProp>
+          </ConstantTimer>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quote" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PATCH Insureance Quotes" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">PATCH</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;status&quot;: &quot;QUOTE_RECEIVED&quot;,&#xd;
+  &quot;expirationDate&quot;: &quot;${endDate}&quot;,&#xd;
+  &quot;insurancePremium&quot;: {&#xd;
+    &quot;amount&quot;: &quot;${moneyAmount}&quot;,&#xd;
+    &quot;currency&quot;: &quot;CHF&quot;&#xd;
+  },&#xd;
+  &quot;policyLimit&quot;: {&#xd;
+    &quot;amount&quot;: &quot;${moneyAmount}&quot;,&#xd;
+    &quot;currency&quot;: &quot;CHF&quot;&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quote" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET User" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_USER}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Customer" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Policies" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quote" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PATCH Insureance Quotes" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">PATCH</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;status&quot;:&quot;QUOTE_REJECTED&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Workflow Accept Insurance Offer" enabled="false">
+        <intProp name="ThreadGroup.num_threads">5</intProp>
+        <intProp name="ThreadGroup.ramp_time">0</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <stringProp name="LoopController.loops">48</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="Random Parameters" enabled="true">
+          <collectionProp name="UserParameters.names">
+            <stringProp name="2020068664">moneyAmount</stringProp>
+            <stringProp name="-2129778896">startDate</stringProp>
+            <stringProp name="-1607727319">endDate</stringProp>
+          </collectionProp>
+          <collectionProp name="UserParameters.thread_values">
+            <collectionProp name="325044195">
+              <stringProp name="-1868052610">${__Random(0,9999)}</stringProp>
+              <stringProp name="836410989">${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;)}</stringProp>
+              <stringProp name="788460695">${__timeShift(yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;,,P365D,,)}</stringProp>
+            </collectionProp>
+          </collectionProp>
+          <boolProp name="UserParameters.per_iteration">false</boolProp>
+        </UserParameters>
+        <hashTree/>
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Counter" enabled="true">
+          <stringProp name="CounterConfig.start">1</stringProp>
+          <stringProp name="CounterConfig.end">99999</stringProp>
+          <stringProp name="CounterConfig.incr">1</stringProp>
+          <stringProp name="CounterConfig.name">counter</stringProp>
+          <stringProp name="CounterConfig.format">00000</stringProp>
+          <boolProp name="CounterConfig.per_user">false</boolProp>
+        </CounterConfig>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST Auth" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_AUTH}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;email&quot;: &quot;admin@example.com&quot;,&#xd;
+  &quot;password&quot;: &quot;1password&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Token" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">token</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.token</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET User" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_USER}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Customer Id" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">customerId</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.customerId</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Customer" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract City" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">city</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;city&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Street Address" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">streetAddress</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;streetAddress&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Postal Code" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">postalCode</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;postalCode&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Date" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">date</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][&apos;date&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract City" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">city</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;city&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Street Address" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">streetAddress</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;streetAddress&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Postal Code" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">postalCode</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;postalCode&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Policies" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Start Date" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">startDate</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][*][&apos;startDate&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract End Date" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">endDate</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][*][&apos;endDate&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST Insureance Quote" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;statusHistory&quot;: [],&#xd;
+  &quot;customerInfo&quot;: {&#xd;
+    &quot;customerId&quot;: &quot;${customerId}&quot;,&#xd;
+    &quot;firstname&quot;: &quot;${firstname}&quot;,&#xd;
+    &quot;lastname&quot;: &quot;${lastname}&quot;,&#xd;
+    &quot;contactAddress&quot;: {&#xd;
+      &quot;streetAddress&quot;: &quot;${streetAddress}&quot;,&#xd;
+      &quot;postalCode&quot;: &quot;${postalCode}&quot;,&#xd;
+      &quot;city&quot;: &quot;${city}&quot;&#xd;
+    },&#xd;
+    &quot;billingAddress&quot;: {&#xd;
+      &quot;streetAddress&quot;: &quot;${streetAddress}&quot;,&#xd;
+      &quot;postalCode&quot;: &quot;${postalCode}&quot;,&#xd;
+      &quot;city&quot;: &quot;${city}&quot;&#xd;
+    }&#xd;
+  },&#xd;
+  &quot;insuranceOptions&quot;: {&#xd;
+    &quot;startDate&quot;: &quot;${startDate}&quot;,&#xd;
+    &quot;insuranceType&quot;: &quot;string&quot;,&#xd;
+    &quot;deductible&quot;: {&#xd;
+      &quot;amount&quot;: &quot;${moneyAmount}&quot;,&#xd;
+      &quot;currency&quot;: &quot;CHF&quot;&#xd;
+    }&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Insurance Id" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">insuranceId</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.id</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Policies" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+            <stringProp name="ConstantTimer.delay">1000</stringProp>
+          </ConstantTimer>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quote" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PATCH Insureance Quotes" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">PATCH</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;status&quot;: &quot;QUOTE_RECEIVED&quot;,&#xd;
+  &quot;expirationDate&quot;: &quot;${endDate}&quot;,&#xd;
+  &quot;insurancePremium&quot;: {&#xd;
+    &quot;amount&quot;: &quot;${moneyAmount}&quot;,&#xd;
+    &quot;currency&quot;: &quot;CHF&quot;&#xd;
+  },&#xd;
+  &quot;policyLimit&quot;: {&#xd;
+    &quot;amount&quot;: &quot;${moneyAmount}&quot;,&#xd;
+    &quot;currency&quot;: &quot;CHF&quot;&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quote" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET User" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_USER}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Customer" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Policies" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quote" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PATCH Insureance Quotes" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">PATCH</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;status&quot;:&quot;QUOTE_ACCEPTED&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quote" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Customer Group">
+        <intProp name="ThreadGroup.num_threads">5</intProp>
+        <intProp name="ThreadGroup.ramp_time">0</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <stringProp name="LoopController.loops">100</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST Auth">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_AUTH}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;email&quot;: &quot;admin@example.com&quot;,&#xd;
+  &quot;password&quot;: &quot;1password&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Token" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">token</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.token</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Customers">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Birthday" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">birthday</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;birthday&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract City" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">city</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;city&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Street Address" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">streetAddress</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;streetAddress&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Postal Code" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">postalCode</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;postalCode&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Telephone" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">telephone</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;phoneNumber&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+            <stringProp name="Scope.variable"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST Customer" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;firstname&quot;: &quot;${firstname}&quot;,&#xd;
+  &quot;lastname&quot;: &quot;${lastname}&quot;,&#xd;
+  &quot;birthday&quot;: &quot;${birthday}&quot;,&#xd;
+  &quot;city&quot;: &quot;${city}&quot;,&#xd;
+  &quot;streetAddress&quot;: &quot;${streetAddress}&quot;,&#xd;
+  &quot;postalCode&quot;: &quot;${postalCode}&quot;,&#xd;
+  &quot;phoneNumber&quot;: &quot;${telephone}&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Customer Id" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">customerId</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.customerId</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Customer" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Email" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">email</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.email</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PUT Created Customer" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">PUT</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;customerId&quot;: &quot;${customerId}&quot;,&#xd;
+  &quot;firstname&quot;: &quot;${firstname}&quot;,&#xd;
+  &quot;lastname&quot;: &quot;${lastname}&quot;,&#xd;
+  &quot;birthday&quot;: &quot;${birthday}&quot;,&#xd;
+  &quot;streetAddress&quot;: &quot;${streetAddress}&quot;,&#xd;
+  &quot;postalCode&quot;: &quot;${postalCode}&quot;,&#xd;
+  &quot;city&quot;: &quot;${city}&quot;,&#xd;
+  &quot;email&quot;: &quot;${email}&quot;,&#xd;
+  &quot;phoneNumber&quot;: &quot;${telephone}&quot;,&#xd;
+  &quot;moveHistory&quot;: [],&#xd;
+  &quot;links&quot;: []&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Policy Group">
+        <intProp name="ThreadGroup.num_threads">5</intProp>
+        <intProp name="ThreadGroup.ramp_time">0</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <stringProp name="LoopController.loops">100</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="Random Parameters" enabled="true">
+          <collectionProp name="UserParameters.names">
+            <stringProp name="2020068664">moneyAmount</stringProp>
+          </collectionProp>
+          <collectionProp name="UserParameters.thread_values">
+            <collectionProp name="921376380">
+              <stringProp name="-1868052610">${__Random(0,9999)}</stringProp>
+            </collectionProp>
+          </collectionProp>
+          <boolProp name="UserParameters.per_iteration">false</boolProp>
+        </UserParameters>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Customers">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Customer Id" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">customerId</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;customerId&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Policies" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICIES}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Start Date" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">startDate</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][*][&apos;startDate&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract End Date" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">endDate</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][*][&apos;endDate&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST Policy" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICIES}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;customerId&quot;: &quot;${customerId}&quot;,&#xd;
+  &quot;policyPeriod&quot;: {&#xd;
+    &quot;startDate&quot;: &quot;${startDate}&quot;,&#xd;
+    &quot;endDate&quot;: &quot;${endDate}&quot;&#xd;
+  },&#xd;
+  &quot;policyType&quot;: &quot;string&quot;,&#xd;
+  &quot;deductible&quot;: {&#xd;
+    &quot;amount&quot;: &quot;${moneyAmount}&quot;,&#xd;
+    &quot;currency&quot;: &quot;CHF&quot;&#xd;
+  },&#xd;
+  &quot;policyLimit&quot;: {&#xd;
+    &quot;amount&quot;: &quot;${moneyAmount}&quot;,&#xd;
+    &quot;currency&quot;: &quot;CHF&quot;&#xd;
+  },&#xd;
+  &quot;insurancePremium&quot;: {&#xd;
+    &quot;amount&quot;: &quot;${moneyAmount}&quot;,&#xd;
+    &quot;currency&quot;: &quot;CHF&quot;&#xd;
+  },&#xd;
+  &quot;insuringAgreement&quot;: {&#xd;
+    &quot;agreementItems&quot;: [&#xd;
+      {&#xd;
+        &quot;title&quot;: &quot;JMeter&quot;,&#xd;
+        &quot;description&quot;: &quot;Load Test&quot;&#xd;
+      }&#xd;
+    ]&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Policy Id" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">policyId</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.policyId</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Policy" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICIES}/${policyId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PUT Created Policy" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICIES}/${policyId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">PUT</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;customerId&quot;: &quot;${customerId}&quot;,&#xd;
+  &quot;policyPeriod&quot;: {&#xd;
+    &quot;startDate&quot;: &quot;${startDate}&quot;,&#xd;
+    &quot;endDate&quot;: &quot;${endDate}&quot;&#xd;
+  },&#xd;
+  &quot;policyType&quot;: &quot;string&quot;,&#xd;
+  &quot;deductible&quot;: {&#xd;
+    &quot;amount&quot;: &quot;${moneyAmount}&quot;,&#xd;
+    &quot;currency&quot;: &quot;CHF&quot;&#xd;
+  },&#xd;
+  &quot;policyLimit&quot;: {&#xd;
+    &quot;amount&quot;: &quot;${moneyAmount}&quot;,&#xd;
+    &quot;currency&quot;: &quot;CHF&quot;&#xd;
+  },&#xd;
+  &quot;insurancePremium&quot;: {&#xd;
+    &quot;amount&quot;: &quot;${moneyAmount}&quot;,&#xd;
+    &quot;currency&quot;: &quot;CHF&quot;&#xd;
+  },&#xd;
+  &quot;insuringAgreement&quot;: {&#xd;
+    &quot;agreementItems&quot;: [&#xd;
+      {&#xd;
+        &quot;title&quot;: &quot;JMeter&quot;,&#xd;
+        &quot;description&quot;: &quot;Load Test&quot;&#xd;
+      }&#xd;
+    ]&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="DELETE Created Policy" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICIES}/${policyId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">DELETE</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Insurance Quote Group" enabled="false">
+        <intProp name="ThreadGroup.num_threads">5</intProp>
+        <intProp name="ThreadGroup.ramp_time">0</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <stringProp name="LoopController.loops">100</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="Random Parameters" enabled="true">
+          <collectionProp name="UserParameters.names">
+            <stringProp name="2020068664">moneyAmount</stringProp>
+          </collectionProp>
+          <collectionProp name="UserParameters.thread_values">
+            <collectionProp name="921376380">
+              <stringProp name="-1868052610">${__Random(0,9999)}</stringProp>
+            </collectionProp>
+          </collectionProp>
+          <boolProp name="UserParameters.per_iteration">false</boolProp>
+        </UserParameters>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST Auth" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_AUTH}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;email&quot;: &quot;admin@example.com&quot;,&#xd;
+  &quot;password&quot;: &quot;1password&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Token" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">token</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.token</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET User" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_USER}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Customer Id" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">customerId</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.customerId</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insurance Quotes" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Date" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">date</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][&apos;date&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract City" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">city</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;city&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Street Address" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">streetAddress</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;streetAddress&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Postal Code" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">postalCode</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;postalCode&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST Insurance Quote" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;statusHistory&quot;: [],&#xd;
+  &quot;customerInfo&quot;: {&#xd;
+    &quot;customerId&quot;: &quot;${customerId}&quot;,&#xd;
+    &quot;firstname&quot;: &quot;${firstname}&quot;,&#xd;
+    &quot;lastname&quot;: &quot;${lastname}&quot;,&#xd;
+    &quot;contactAddress&quot;: {&#xd;
+      &quot;streetAddress&quot;: &quot;${streetAddress}&quot;,&#xd;
+      &quot;postalCode&quot;: &quot;${postalCode}&quot;,&#xd;
+      &quot;city&quot;: &quot;${city}&quot;&#xd;
+    },&#xd;
+    &quot;billingAddress&quot;: {&#xd;
+      &quot;streetAddress&quot;: &quot;${streetAddress}&quot;,&#xd;
+      &quot;postalCode&quot;: &quot;${postalCode}&quot;,&#xd;
+      &quot;city&quot;: &quot;${city}&quot;&#xd;
+    }&#xd;
+  },&#xd;
+  &quot;insuranceOptions&quot;: {&#xd;
+    &quot;startDate&quot;: &quot;${date}&quot;,&#xd;
+    &quot;insuranceType&quot;: &quot;string&quot;,&#xd;
+    &quot;deductible&quot;: {&#xd;
+      &quot;amount&quot;: &quot;${moneyAmount}&quot;,&#xd;
+      &quot;currency&quot;: &quot;CHF&quot;&#xd;
+    }&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Insurance Quote Id" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">insuranceQuoteId</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.id</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insurance Quote" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceQuoteId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PATCH Created Insurance Quote" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceQuoteId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">PATCH</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;status&quot;: &quot;QUOTE_RECEIVED&quot;,&#xd;
+  &quot;expirationDate&quot;: &quot;${date}&quot;,&#xd;
+  &quot;insurancePremium&quot;: {&#xd;
+    &quot;amount&quot;: &quot;${moneyAmount}&quot;,&#xd;
+    &quot;currency&quot;: &quot;CHF&quot;&#xd;
+  },&#xd;
+  &quot;policyLimit&quot;: {&#xd;
+    &quot;amount&quot;: &quot;${moneyAmount}&quot;,&#xd;
+    &quot;currency&quot;: &quot;CHF&quot;&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Interaction Log Group" enabled="false">
+        <intProp name="ThreadGroup.num_threads">5</intProp>
+        <intProp name="ThreadGroup.ramp_time">0</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <stringProp name="LoopController.loops">200</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST Auth" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_AUTH}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;email&quot;: &quot;admin@example.com&quot;,&#xd;
+  &quot;password&quot;: &quot;1password&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Token" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">token</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.token</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET User" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_USER}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Customer Id" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">customerId</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.customerId</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Interaction Logs" enabled="true">
+          <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_INTERACTION_LOGS}/${customerId}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Notification Id" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">notificationId</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;id&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="RespTimeGraphVisualizer" testclass="ResultCollector" testname="Response Time Graph" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+        <stringProp name="RespTimeGraph.interval">1000</stringProp>
+      </ResultCollector>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
