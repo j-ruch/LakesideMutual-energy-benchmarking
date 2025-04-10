@@ -19,6 +19,8 @@
 -- Table structure for table `addresses`
 --
 
+use policymanagement;
+
 DROP TABLE IF EXISTS `addresses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
