@@ -14,7 +14,7 @@ JOULARJX_CONFIG="$WORKSPACE/LakesideMutual-energy-benchmarking/joularjx_Lakeside
 APP_RUN_IDENTIFIER="$(date +%Y-%m-%d_%H-%M-%S)"
 OUTPUT_FOLDER="$WORKSPACE/LakesideMutual-energy-benchmarking/out/$APP_RUN_IDENTIFIER"
 
-JAVA_OPTS="-javaagent:$WORKSPACE/joularjx/target/joularjx-3.0.1.jar -Djoularjx.config=$JOULARJX_CONFIG -Dspring.profiles.active=default,test"
+JAVA_OPTS="-Xmx2g -Xms2g -XX:ActiveProcessorCount=2 -javaagent:$WORKSPACE/joularjx/target/joularjx-3.0.1.jar -Djoularjx.config=$JOULARJX_CONFIG -Dspring.profiles.active=default,test"
 
 CUSTOMER_CORE_PORT="8110"
 CUSTOMER_MANAGEMENT_PORT="8100"
