@@ -11,20 +11,28 @@ JMETER_CONFIG="$WORKSPACE/LakesideMutual-energy-benchmarking/jmeter-LakesideMutu
 
 JOULARJX_CONFIG="$WORKSPACE/LakesideMutual-energy-benchmarking/joularjx_LakesideMutual-SOA_config.properties"
 
+BENCHMARK_DATA_CUSTOMER_CORE="$WORKSPACE/LakesideMutual-energy-benchmarking/sql/01_customercore.sql"
+BENCHMARK_DATA_CUSTOMER_MANAGEMENT="$WORKSPACE/LakesideMutual-energy-benchmarking/sql/02_customermanagement.sql"
+BENCHMARK_DATA_CUSTOMER_SELF_SERVICE="$WORKSPACE/LakesideMutual-energy-benchmarking/sql/03_customerselfservice.sql"
+BENCHMARK_DATA_POLICY_MANAGEMENT="$WORKSPACE/LakesideMutual-energy-benchmarking/sql/04_policymanagement.sql"
+DOCKER_COMPOSE_FILE="$WORKSPACE/LakesideMutual-energy-benchmarking/docker-compose.yml"
+
 APP_RUN_IDENTIFIER="$(date +%Y-%m-%d_%H-%M-%S)"
 OUTPUT_FOLDER="$WORKSPACE/LakesideMutual-energy-benchmarking/out/$APP_RUN_IDENTIFIER"
 
-JAVA_OPTS="-Xmx2g -Xms2g -XX:ActiveProcessorCount=2 -javaagent:$WORKSPACE/joularjx/target/joularjx-3.0.1.jar -Djoularjx.config=$JOULARJX_CONFIG -Dspring.profiles.active=default,test"
+JAVA_OPTS="-Xmx2g -Xms2g -XX:ActiveProcessorCount=2 -javaagent:$WORKSPACE/joularjx/target/joularjx-3.0.1.jar -Djoularjx.config=$JOULARJX_CONFIG -Dspring.profiles.active=default,test -Dspring.jpa.database-platform=org.hibernate.dialect.MySQLDialect"
 
 CUSTOMER_CORE_PORT="8110"
 CUSTOMER_MANAGEMENT_PORT="8100"
 CUSTOMER_SELF_SERVICE_PORT="8080"
 POLICY_MANAGEMENT_PORT="8090"
 
-  CUSTOMER_CORE_URL="localhost:$CUSTOMER_CORE_PORT"
-CUSTOMER_MANAGEMENT_URL="localhost:$CUSTOMER_MANAGEMENT_PORT"
-CUSTOMER_SELF_SERVICE_URL="localhost:$CUSTOMER_SELF_SERVICE_PORT"
-POLICY_MANAGEMENT_URL="localhost:$POLICY_MANAGEMENT_PORT"
+URL_SWAGGER_SUFFIX="swagger-ui/index.html"
+
+CUSTOMER_CORE_URL="localhost:$CUSTOMER_CORE_PORT/$URL_SWAGGER_SUFFIX"
+CUSTOMER_MANAGEMENT_URL="localhost:$CUSTOMER_MANAGEMENT_PORT/$URL_SWAGGER_SUFFIX"
+CUSTOMER_SELF_SERVICE_URL="localhost:$CUSTOMER_SELF_SERVICE_PORT/$URL_SWAGGER_SUFFIX"
+POLICY_MANAGEMENT_URL="localhost:$POLICY_MANAGEMENT_PORT/$URL_SWAGGER_SUFFIX"
 
 virtual_threads="false"
 
@@ -227,8 +235,13 @@ start_mysql_container() {
   echo "+================================+"
   echo "| Starting MySQL Container"
   echo "+================================+"
-  mysql_docker_compose_build_command="docker-compose -f docker-compose.yml build"
-  mysql_docker_compose_up_command="docker-compose -f docker-compose.yml up -d"
+  #mysql_container_command="docker run -d --rm -e MYSQL_USER=sa -e MYSQL_PASSWORD=sa -e MYSQL_ROOT_PASSWORD=sa -e MYSQL_DATABASE=customercore -p 3306:3306 mysql:8"
+  #echo "$mysql_container_command"
+  #db_container_id=$(eval "$mysql_container_command")
+  #echo "Container ID: $db_container_id"
+  
+  mysql_docker_compose_build_command="docker-compose -f $DOCKER_COMPOSE_FILE build"
+  mysql_docker_compose_up_command="docker-compose -f $DOCKER_COMPOSE_FILE up -d"
 
   echo "$mysql_docker_compose_build_command"
   eval "$mysql_docker_compose_build_command"
@@ -236,18 +249,28 @@ start_mysql_container() {
   echo "$mysql_docker_compose_up_command"
   eval "$mysql_docker_compose_up_command"
 
+  sleep 10
+
+  extract_container_id_command="docker ps -qf 'name=lakeside_mutual'"
+  db_container_id=$(eval "$extract_container_id_command")
+  echo "Container ID: $db_container_id"
+  
   # Wait until the container is ready
   echo "Waiting for MySQL container to start and initialize..."
-  sleep 30
+  until docker exec -it $db_container_id mysql -uroot -psa -e "SELECT '1';" >/dev/null 2>&1; do
+    sleep 1
+  done
 
   # give it a few more seconds to be ready
-  sleep 5
+  echo "Give it 15s to be ready"
+  sleep 15 
 
-  extract_container_id_command="docker-compose ps -q mysql"
-  db_container_id=$(eval "$extract_container_id_command")
+  #mysql_import_command="docker exec -i $db_container_id mysql -u root -psa customercore < $BENCHMARK_DATA_CUSTOMER_CORE"
+  #echo "$mysql_import_command"
+  #eval "$mysql_import_command"
 
-  # 2000 is the number of expected pets
-  verify_import_command="docker exec -i $db_container_id mysql -u root -pcustomercore -e \"USE customercore; SELECT count(*) FROM customers;\" | grep 1001"
+  # 1001 is the number of expected customers
+  verify_import_command="docker exec -it $db_container_id mysql -u root -psa -e \"USE customercore; SELECT count(*) FROM customers;\" | grep 1001"
   echo "$verify_import_command"
   eval "$verify_import_command"
   if [ $? -ne 0 ]; then
@@ -299,8 +322,8 @@ start_application() {
 
 
   customer_self_service_run_command="$RUN_CMD_CUSTOMER_SELF_SERVICE > $run_output_file_customer_self_service 2>&1 &"
-  echo "$customer_management_run_command"
-  eval "$customer_management_run_command"
+  echo "$customer_self_service_run_command"
+  eval "$customer_self_service_run_command"
 
   CUSTOMER_SELF_SERVICE_PID=$!
   sleep 2
@@ -345,7 +368,7 @@ check_service_initial_request() {
 }
 
 check_application_initial_request() {
-  timeout=45
+  timeout=60
   end_time=$((SECONDS + timeout))
 
   check_service_initial_request "$timeout" "$end_time" "$CUSTOMER_CORE_URL" "$CUSTOMER_CORE_PID"
@@ -380,7 +403,8 @@ stop_mysql_container() {
   echo "+================================+"
   echo "| Stopping MySQL Container"
   echo "+================================+"
-  mysql_stop_command="docker-compose -f docker-compose.yml down -v"
+  #mysql_stop_command="docker stop $db_container_id"
+  mysql_stop_command="docker-compose -f $DOCKER_COMPOSE_FILE down -v"
   echo "$mysql_stop_command"
   eval "$mysql_stop_command"
   if [ $? -ne 0 ]; then
@@ -389,38 +413,22 @@ stop_mysql_container() {
   fi
 }
 
-start_jmeter_service() {
-  local jmeter_cmd="$1"
-  local jmeter_output_file="$2"
-
-  jmeter_command="$jmeter_cmd > $jmeter_output_file 2>&1"
-  echo "$jmeter_command"
-
-  eval "$jmeter_command"
-  if [ $? -ne 0 ]; then
-    echo "ERROR: JMeter run failed. Check $jmeter_output_file for details."
-    return 1
-  fi
-}
-
 start_jmeter() {
   echo "+================================+"
   echo "| Starting JMeter"
   echo "+================================+"
-  jmeter_output_file_customer_core="$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-core-jmeter.log"
-  jmeter_output_file_customer_management="$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-management-jmeter.log"
-  jmeter_output_file_customer_self_service="$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-self-service-jmeter.log"
-  jmeter_output_file_policy_management="$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-policy-management-jmeter.log"
+  jmeter_output_file="$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-jmeter.log"
 
-  JMETER_CMD_CUSTOMER_CORE="jmeter -n -t $JMETER_CONFIG -l $OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-core-jmeter.jtl -j $OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-core-jmeter.log"
-  JMETER_CMD_CUSTOMER_MANAGEMENT="jmeter -n -t $JMETER_CONFIG -l $OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-management-jmeter.jtl -j $OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-management-jmeter.log"
-  JMETER_CMD_CUSTOMER_SELF_SERVICE="jmeter -n -t $JMETER_CONFIG -l $OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-self-service-jmeter.jtl -j $OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-self-service-jmeter.log"
-  JMETER_CMD_POLICY_MANAGEMENT="jmeter -n -t $JMETER_CONFIG -l $OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-policy-management-jmeter.jtl -j $OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-policy-management-jmeter.log"
+  JMETER_CMD="jmeter -n -t $JMETER_CONFIG -l $OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-jmeter.jtl -j $OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-jmeter.log"
 
-  start_jmeter_service "$JMETER_CMD_CUSTOMER_CORE" "$jmeter_output_file_customer_core"
-  start_jmeter_service "$JMETER_CMD_CUSTOMER_MANAGEMENT" "$jmeter_output_file_customer_management"
-  start_jmeter_service "$JMETER_CMD_CUSTOMER_SELF_SERVICE" "$jmeter_output_file_customer_self_service"
-  start_jmeter_service "$JMETER_CMD_POLICY_MANAGEMENT" "$jmeter_output_file_policy_management"
+  jmeter_command="$JMETER_CMD > $jmeter_output_file 2>&1"
+  echo "$JMETER_CMD"
+
+  eval "$JMETER_CMD"
+  if [ $? -ne 0 ]; then
+    echo "ERROR: JMeter run failed. Check $jmeter_output_file for details."
+    return 1
+  fi
 }
 
 save_energy_measurement() {
@@ -500,38 +508,14 @@ extract_run_properties() {
   echo "Joules Customer-Self-Service-Backend: $joules_customer_self_service"
   echo "Joules Policy-Management-Backend: $joules_policy_management"
 
-  jmetertime_customer_core=$(grep "summary =" "$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-core-jmeter.log" | tail -n 1 | awk -F'=' '{print $2}' | sed -E 's/.*in ([0-9]{2}:[0-9]{2}:[0-9]{2}).*/\1/')
-  jmetertime_customer_management=$(grep "summary =" "$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-management-jmeter.log" | tail -n 1 | awk -F'=' '{print $2}' | sed -E 's/.*in ([0-9]{2}:[0-9]{2}:[0-9]{2}).*/\1/')
-  jmetertime_customer_self_service=$(grep "summary =" "$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-self-service-jmeter.log" | tail -n 1 | awk -F'=' '{print $2}' | sed -E 's/.*in ([0-9]{2}:[0-9]{2}:[0-9]{2}).*/\1/')
-  jmetertime_policy_management=$(grep "summary =" "$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-policy-management-jmeter.log" | tail -n 1 | awk -F'=' '{print $2}' | sed -E 's/.*in ([0-9]{2}:[0-9]{2}:[0-9]{2}).*/\1/')
+  jmetertime=$(grep "summary =" "$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-jmeter.log" | tail -n 1 | awk -F'=' '{print $2}' | sed -E 's/.*in ([0-9]{2}:[0-9]{2}:[0-9]{2}).*/\1/')
 
-  echo "JMeter Customer-Core: $jmetertime_customer_core"
-  echo "JMeter Customer-Management-Backend: $jmetertime_customer_management"
-  echo "JMeter Customer-Self-Service-Backend: $jmetertime_customer_self_service"
-  echo "JMeter Policy-Management-Backend: $jmetertime_policy_management"
+  echo "JMeter: $jmetertime"
 
-  jmeter_errors_customer_core=$(grep "summary =" "$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-core-jmeter.log" | tail -n 1 | awk -F'Err:' '{gsub(/^[ \t]+/, "", $2); split($2, a, " "); print a[1]}')
-  jmeter_errors_customer_management=$(grep "summary =" "$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-management-jmeter.log" | tail -n 1 | awk -F'Err:' '{gsub(/^[ \t]+/, "", $2); split($2, a, " "); print a[1]}')
-  jmeter_errors_customer_self_service=$(grep "summary =" "$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-self-service-jmeter.log" | tail -n 1 | awk -F'Err:' '{gsub(/^[ \t]+/, "", $2); split($2, a, " "); print a[1]}')
-  jmeter_errors_policy_management=$(grep "summary =" "$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-policy-management-jmeter.log" | tail -n 1 | awk -F'Err:' '{gsub(/^[ \t]+/, "", $2); split($2, a, " "); print a[1]}')
+  jmeter_errors=$(grep "summary =" "$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-jmeter.log" | tail -n 1 | awk -F'Err:' '{gsub(/^[ \t]+/, "", $2); split($2, a, " "); print a[1]}')
 
-  if [ "$jmeter_errors_customer_core" != "0" ]; then
-    echo "ERROR: JMeter run failed with errors. Check $OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-core-jmeter.log for details."
-    exit 1
-  fi
-
-  if [ "$jmeter_errors_customer_management" != "0" ]; then
-    echo "ERROR: JMeter run failed with errors. Check $OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-management-jmeter.log for details."
-    exit 1
-  fi
-
-  if [ "$jmeter_errors_customer_self_service" != "0" ]; then
-    echo "ERROR: JMeter run failed with errors. Check $OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-self-service-jmeter.log for details."
-    exit 1
-  fi
-
-  if [ "$jmeter_errors_policy_management" != "0" ]; then
-    echo "ERROR: JMeter run failed with errors. Check $OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-policy-management-jmeter.log for details."
+  if [ "$jmeter_errors" != "0" ]; then
+    echo "ERROR: JMeter run failed with errors. Check $OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-jmeter.log for details."
     exit 1
   fi
 
@@ -571,10 +555,7 @@ extract_run_properties() {
   echo "Joules Customer-Self-Service-Backend: $joules_customer_self_service" >> "$results_output_file"
   echo "Joules Policy-Management-Backend: $joules_policy_management" >> "$results_output_file"
 
-  echo "JMeter Customer-Core: $jmetertime_customer_core" >> "$results_output_file"
-  echo "JMeter Customer-Management-Backend: $jmetertime_customer_management" >> "$results_output_file"
-  echo "JMeter Customer-Self-Service-Backend: $jmetertime_customer_self_service" >> "$results_output_file"
-  echo "JMeter Policy-Management-Backend: $jmetertime_policy_management" >> "$results_output_file"
+  echo "JMeter: $jmetertime" >> "$results_output_file"
 
   # Extract the energy measurements, excluding some methods that we are not interested in
   find_command="find $OUTPUT_FOLDER/ -name '*filtered-methods-energy.csv' | xargs cat | grep -v 'CGLIB\$STATICHOOK' | grep -v '0.0000' | grep -v 'equals' | grep -v 'invoke' | grep -v 'init' | grep -v 'setCallbacks'| grep -v 'isFrozen' | grep -v 'addAdvisor' | grep -v 'getIndex' | grep -v 'getTargetClass' | sed 's/com.lakesidemutual.customercore.interfaces.//' | sed 's/,/: /' | sort"
