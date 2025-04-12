@@ -2,6 +2,8 @@
 
 WORKSPACE="$HOME/workspace"
 
+BENCHMARK_HOME="$WORKSPACE/LakesideMutual-energy-benchmarking"
+
 CUSTOMER_CORE_HOME="$WORKSPACE/LakesideMutual/customer-core"
 CUSTOMER_MANAGEMENT_HOME="$WORKSPACE/LakesideMutual/customer-management-backend"
 CUSTOMER_SELF_SERVICE_HOME="$WORKSPACE/LakesideMutual/customer-self-service-backend"
@@ -143,6 +145,8 @@ change_spring_boot_version() {
 
   echo "$change_spring_boot_version_command_policy_management"
   eval "cd $POLICY_MANAGEMENT_HOME; $change_spring_boot_version_command_policy_management"
+  echo "Switching back to $BENCHMARK_HOME"
+  eval "cd $BENCHMARK_HOME"
 }
 
 change_jvm_version() {
@@ -192,10 +196,13 @@ build_application() {
   BUILD_CMD_CUSTOMER_SELF_SERVICE="$CUSTOMER_SELF_SERVICE_HOME/mvnw -f $CUSTOMER_SELF_SERVICE_HOME/pom.xml clean package -Dmaven.test.skip -Dmaven.compiler.release=$java_version"
   BUILD_CMD_POLICY_MANAGEMENT="$POLICY_MANAGEMENT_HOME/mvnw -f $POLICY_MANAGEMENT_HOME/pom.xml clean package -Dmaven.test.skip -Dmaven.compiler.release=$java_version"
 
-  build_application_component "$BUILD_CMD_CUSTOMER_CORE" "$build_output_file_customer_core" "$CUSTOMER_CORE_HOME"
-  build_application_component "$BUILD_CMD_CUSTOMER_MANAGEMENT" "$build_output_file_customer_management" "$CUSTOMER_MANAGEMENT_HOME"
-  build_application_component "$BUILD_CMD_CUSTOMER_SELF_SERVICE" "$build_output_file_customer_self_service" "$CUSTOMER_SELF_SERVICE_HOME"
-  build_application_component "$BUILD_CMD_POLICY_MANAGEMENT" "$build_output_file_policy_management" "$POLICY_MANAGEMENT_HOME"
+  build_application_component "$BUILD_CMD_CUSTOMER_CORE" "$build_output_file_customer_core" "$CUSTOMER_CORE_HOME" || { exit 1; }
+  build_application_component "$BUILD_CMD_CUSTOMER_MANAGEMENT" "$build_output_file_customer_management" "$CUSTOMER_MANAGEMENT_HOME" || { exit 1; }
+  build_application_component "$BUILD_CMD_CUSTOMER_SELF_SERVICE" "$build_output_file_customer_self_service" "$CUSTOMER_SELF_SERVICE_HOME" || { exit 1; }
+  build_application_component "$BUILD_CMD_POLICY_MANAGEMENT" "$build_output_file_policy_management" "$POLICY_MANAGEMENT_HOME" || { exit 1; }
+
+  echo "Switching back to $BENCHMARK_HOME"
+  eval "cd $BENCHMARK_HOME"
 }
 
 print_app_info() {
@@ -225,10 +232,10 @@ check_if_port_is_open() {
 }
 
 check_if_ports_are_open() {
-  check_if_port_is_open "$CUSTOMER_CORE_PORT"
-  check_if_port_is_open "$CUSTOMER_MANAGEMENT_PORT"
-  check_if_port_is_open "$CUSTOMER_SELF_SERVICE_PORT"
-  check_if_port_is_open "$POLICY_MANAGEMENT_PORT"
+  check_if_port_is_open "$CUSTOMER_CORE_PORT" || { exit 1; }
+  check_if_port_is_open "$CUSTOMER_MANAGEMENT_PORT" || { exit 1; }
+  check_if_port_is_open "$CUSTOMER_SELF_SERVICE_PORT" || { exit 1; }
+  check_if_port_is_open "$POLICY_MANAGEMENT_PORT" || { exit 1; }
 }
 
 start_mysql_container() {
@@ -371,10 +378,10 @@ check_application_initial_request() {
   timeout=60
   end_time=$((SECONDS + timeout))
 
-  check_service_initial_request "$timeout" "$end_time" "$CUSTOMER_CORE_URL" "$CUSTOMER_CORE_PID"
-  check_service_initial_request "$timeout" "$end_time" "$CUSTOMER_MANAGEMENT_URL" "$CUSTOMER_MANAGEMENT_PID"
-  check_service_initial_request "$timeout" "$end_time" "$CUSTOMER_SELF_SERVICE_URL" "$CUSTOMER_SELF_SERVICE_PID"
-  check_service_initial_request "$timeout" "$end_time" "$POLICY_MANAGEMENT_URL" "$POLICY_MANAGEMENT_PID"
+  check_service_initial_request "$timeout" "$end_time" "$CUSTOMER_CORE_URL" "$CUSTOMER_CORE_PID" || { exit 1; }
+  check_service_initial_request "$timeout" "$end_time" "$CUSTOMER_MANAGEMENT_URL" "$CUSTOMER_MANAGEMENT_PID" || { exit 1; }
+  check_service_initial_request "$timeout" "$end_time" "$CUSTOMER_SELF_SERVICE_URL" "$CUSTOMER_SELF_SERVICE_PID" || { exit 1; }
+  check_service_initial_request "$timeout" "$end_time" "$POLICY_MANAGEMENT_URL" "$POLICY_MANAGEMENT_PID" || { exit 1; }
 }
 
 stop_service() {
@@ -393,10 +400,10 @@ stop_application() {
   echo "+================================+"
   echo "| Stopping Application"
   echo "+================================+"
-  stop_service "kill -15 $CUSTOMER_CORE_PID && sleep 10" "$CUSTOMER_CORE_PID"
-  stop_service "kill -15 $CUSTOMER_MANAGEMENT_PID && sleep 10" "$CUSTOMER_MANAGEMENT_PID"
-  stop_service "kill -15 $CUSTOMER_SELF_SERVICE_PID && sleep 10" "$CUSTOMER_SELF_SERVICE_PID"
-  stop_service "kill -15 $POLICY_MANAGEMENT_PID && sleep 10" "$POLICY_MANAGEMENT_PID"
+  stop_service "kill -15 $CUSTOMER_CORE_PID && sleep 10" "$CUSTOMER_CORE_PID" || { exit 1; }
+  stop_service "kill -15 $CUSTOMER_MANAGEMENT_PID && sleep 10" "$CUSTOMER_MANAGEMENT_PID" || { exit 1; }
+  stop_service "kill -15 $CUSTOMER_SELF_SERVICE_PID && sleep 10" "$CUSTOMER_SELF_SERVICE_PID" || { exit 1; }
+  stop_service "kill -15 $POLICY_MANAGEMENT_PID && sleep 10" "$POLICY_MANAGEMENT_PID" || { exit 1; }
 }
 
 stop_mysql_container() {
@@ -436,21 +443,9 @@ save_energy_measurement() {
   echo "| Saving Energy Measurement"
   echo "+================================+"
 
-  save_energy_measurement_command_customer_core="find $CUSTOMER_CORE_HOME/joularjx-result -name '*.csv' | xargs -I '{}' mv '{}' $OUTPUT_FOLDER/"
+  save_energy_measurement_command_customer_core="find $BENCHMARK_HOME/joularjx-result -name '*.csv' | xargs -I '{}' mv '{}' $OUTPUT_FOLDER/"
   echo "$save_energy_measurement_command_customer_core"
   eval "$save_energy_measurement_command_customer_core"
-
-  save_energy_measurement_command_customer_management="find $CUSTOMER_MANAGEMENT_HOME/joularjx-result -name '*.csv' | xargs -I '{}' mv '{}' $OUTPUT_FOLDER/"
-  echo "$save_energy_measurement_command_customer_management"
-  eval "$save_energy_measurement_command_customer_management"
-
-  save_energy_measurement_command_customer_self_service="find $CUSTOMER_SELF_SERVICE_HOME/joularjx-result -name '*.csv' | xargs -I '{}' mv '{}' $OUTPUT_FOLDER/"
-  echo "$save_energy_measurement_command_customer_self_service"
-  eval "$save_energy_measurement_command_customer_self_service"
-
-  save_energy_measurement_command_policy_management="find $POLICY_MANAGEMENT_HOME/joularjx-result -name '*.csv' | xargs -I '{}' mv '{}' $OUTPUT_FOLDER/"
-  echo "$save_energy_measurement_command_policy_management"
-  eval "$save_energy_measurement_command_policy_management"
 }
 
 extract_run_properties() {
@@ -574,7 +569,7 @@ cleanup() {
   echo "+================================+"
   echo "| Cleaning up"
   echo "+================================"
-  cleanup_command="rm -rf $CUSTOMER_CORE_HOME/joularjx-result && rm -rf $CUSTOMER_MANAGEMENT_HOME/joularjx-result && rm -rf $CUSTOMER_SELF_SERVICE_HOME/joularjx-result && rm -rf $POLICY_MANAGEMENT_HOME/joularjx-result"
+  cleanup_command="rm -rf $BENCHMARK_HOME/joularjx-result"
   echo "$cleanup_command"
   eval "$cleanup_command"
 }
@@ -611,4 +606,3 @@ extract_run_properties || { exit 1; }
 
 cleanup || { exit 1; }
 
-}
