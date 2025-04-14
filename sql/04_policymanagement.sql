@@ -244,7 +244,7 @@ CREATE TABLE `insurancepolicies` (
 
 LOCK TABLES `insurancepolicies` WRITE;
 /*!40000 ALTER TABLE `insurancepolicies` DISABLE KEYS */;
-INSERT INTO `insurancepolicies` VALUES (1500.00,'CHF',1000000.00,'CHF',250.00,'CHF','2025-04-11 16:57:27.140000','2018-02-10 00:00:00.000000',1,'2018-02-05 00:00:00.000000','rgpp0wkpec','fvo5pkqerr','Health Insurance');
+INSERT INTO `insurancepolicies` VALUES (1500.00,'CHF',1000000.00,'CHF',250.00,'CHF','2025-04-14 18:07:57.360000','2018-02-10 00:00:00.000000',1,'2018-02-05 00:00:00.000000','rgpp0wkpec','fvo5pkqerr','Health Insurance');
 /*!40000 ALTER TABLE `insurancepolicies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -555,4 +555,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-11  8:59:47
+-- Dump completed on 2025-04-14 10:12:18
