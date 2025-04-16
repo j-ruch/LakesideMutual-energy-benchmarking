@@ -562,7 +562,7 @@ extract_run_properties() {
   find_command="find $OUTPUT_FOLDER/ -name '*filtered-methods-energy.csv' | xargs cat | grep -v 'CGLIB\$STATICHOOK' | grep -v '0.0000' | grep -v 'equals' | grep -v 'invoke' | grep -v 'init' | grep -v 'setCallbacks'| grep -v 'isFrozen' | grep -v 'addAdvisor' | grep -v 'getIndex' | grep -v 'getTargetClass' | sed 's/com.lakesidemutual.policymanagement.interfaces.//' | sed 's/,/: /' | sort"
   eval "$find_command >> $results_output_file"
 
-  mv "$OUTPUT_FOLDER" "$OUTPUT_FOLDER-Java-$jvm_version-Spring-Boot-$used_spring_boot_version"
+  mv "$OUTPUT_FOLDER" "$OUTPUT_FOLDER-Java-$jvm_version-Spring-Boot-$spring_boot_version"
 }
 
 cleanup() {
