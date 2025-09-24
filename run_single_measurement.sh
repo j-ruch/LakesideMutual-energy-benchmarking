@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+
 WORKSPACE="$HOME/workspace"
 
 BENCHMARK_HOME="$WORKSPACE/LakesideMutual-energy-benchmarking"
@@ -12,6 +14,8 @@ POLICY_MANAGEMENT_HOME="$WORKSPACE/LakesideMutual/policy-management-backend"
 JMETER_CONFIG="$WORKSPACE/LakesideMutual-energy-benchmarking/jmeter-LakesideMutual-SOA-server.jmx"
 
 JOULARJX_CONFIG="$WORKSPACE/LakesideMutual-energy-benchmarking/joularjx_LakesideMutual-SOA_config.properties"
+
+FLAMEGRAPH_HOME="$WORKSPACE/FlameGraph"
 
 BENCHMARK_DATA_CUSTOMER_CORE="$WORKSPACE/LakesideMutual-energy-benchmarking/sql/01_customercore.sql"
 BENCHMARK_DATA_CUSTOMER_MANAGEMENT="$WORKSPACE/LakesideMutual-energy-benchmarking/sql/02_customermanagement.sql"
@@ -247,8 +251,8 @@ start_mysql_container() {
   #db_container_id=$(eval "$mysql_container_command")
   #echo "Container ID: $db_container_id"
   
-  mysql_docker_compose_build_command="docker-compose -f $DOCKER_COMPOSE_FILE build"
-  mysql_docker_compose_up_command="docker-compose -f $DOCKER_COMPOSE_FILE up -d"
+  mysql_docker_compose_build_command="docker compose -f $DOCKER_COMPOSE_FILE build"
+  mysql_docker_compose_up_command="docker compose -f $DOCKER_COMPOSE_FILE up -d"
 
   echo "$mysql_docker_compose_build_command"
   eval "$mysql_docker_compose_build_command"
@@ -269,8 +273,8 @@ start_mysql_container() {
   done
 
   # give it a few more seconds to be ready
-  echo "Give it 15s to be ready"
-  sleep 15 
+  echo "Give it 5s to be ready"
+  sleep 5 
 
   #mysql_import_command="docker exec -i $db_container_id mysql -u root -psa customercore < $BENCHMARK_DATA_CUSTOMER_CORE"
   #echo "$mysql_import_command"
@@ -297,10 +301,16 @@ start_application() {
   run_output_file_customer_self_service="$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-self-service-run.log"
   run_output_file_policy_management="$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-policy-management-run.log"
 
-  RUN_CMD_CUSTOMER_CORE="java $JAVA_OPTS -Dspring.threads.virtual.enabled=$virtual_threads -jar $CUSTOMER_CORE_HOME/target/*.jar"
-  RUN_CMD_CUSTOMER_MANAGEMENT="java $JAVA_OPTS -Dspring.threads.virtual.enabled=$virtual_threads -jar $CUSTOMER_MANAGEMENT_HOME/target/*.jar"
-  RUN_CMD_CUSTOMER_SELF_SERVICE="java $JAVA_OPTS -Dspring.threads.virtual.enabled=$virtual_threads -jar $CUSTOMER_SELF_SERVICE_HOME/target/*.jar"
-  RUN_CMD_POLICY_MANAGEMENT="java $JAVA_OPTS -Dspring.threads.virtual.enabled=$virtual_threads -jar $POLICY_MANAGEMENT_HOME/target/*.jar"
+  jfr_recording_file_customer_core="$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-core-recording.jfr"
+  jfr_recording_file_customer_management="$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-management-recording.jfr"
+  jfr_recording_file_customer_self_service="$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-self-service-recording.jfr"
+  jfr_recording_file_policy_management="$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-policy-management-recording.jfr"
+
+
+  RUN_CMD_CUSTOMER_CORE="java $JAVA_OPTS -XX:StartFlightRecording=filename=$jfr_recording_file_customer_core,settings=profile -Dspring.threads.virtual.enabled=$virtual_threads -jar $CUSTOMER_CORE_HOME/target/*.jar"
+  RUN_CMD_CUSTOMER_MANAGEMENT="java $JAVA_OPTS -XX:StartFlightRecording=filename=$jfr_recording_file_customer_management,settings=profile -Dspring.threads.virtual.enabled=$virtual_threads -jar $CUSTOMER_MANAGEMENT_HOME/target/*.jar"
+  RUN_CMD_CUSTOMER_SELF_SERVICE="java $JAVA_OPTS -XX:StartFlightRecording=filename=$jfr_recording_file_customer_self_service,settings=profile -Dspring.threads.virtual.enabled=$virtual_threads -jar $CUSTOMER_SELF_SERVICE_HOME/target/*.jar"
+  RUN_CMD_POLICY_MANAGEMENT="java $JAVA_OPTS -XX:StartFlightRecording=filename=$jfr_recording_file_policy_management,settings=profile -Dspring.threads.virtual.enabled=$virtual_threads -jar $POLICY_MANAGEMENT_HOME/target/*.jar"
 
   customer_core_run_command="$RUN_CMD_CUSTOMER_CORE > $run_output_file_customer_core 2>&1 &"
   echo "$customer_core_run_command"
@@ -411,7 +421,7 @@ stop_mysql_container() {
   echo "| Stopping MySQL Container"
   echo "+================================+"
   #mysql_stop_command="docker stop $db_container_id"
-  mysql_stop_command="docker-compose -f $DOCKER_COMPOSE_FILE down -v"
+  mysql_stop_command="docker compose -f $DOCKER_COMPOSE_FILE down -v"
   echo "$mysql_stop_command"
   eval "$mysql_stop_command"
   if [ $? -ne 0 ]; then
@@ -446,6 +456,33 @@ save_energy_measurement() {
   save_energy_measurement_command_customer_core="find $BENCHMARK_HOME/joularjx-result -name '*.csv' | xargs -I '{}' mv '{}' $OUTPUT_FOLDER/"
   echo "$save_energy_measurement_command_customer_core"
   eval "$save_energy_measurement_command_customer_core"
+
+  # Combine all call tree CSV files into one file
+  concatenate_command="find $OUTPUT_FOLDER/ -name '*all-call-trees-energy.csv' | xargs cat >> $OUTPUT_FOLDER/joularJX-all-call-trees-energy-combined.csv"
+  echo "$concatenate_command"
+  eval "$concatenate_command"
+
+  concatenate_command="find $OUTPUT_FOLDER/ -name '*filtered-call-trees-energy.csv' | xargs cat >> $OUTPUT_FOLDER/joularJX-filtered-call-trees-energy-combined.csv"
+  echo "$concatenate_command"
+  eval "$concatenate_command"
+
+  # Generate a folded stack file based on the combined call tree CSV files, remove the last delimiter (,) and replace it with a space
+  fold_command="awk -F, 'NR>1 {print \$1 \" \" \$2}' $OUTPUT_FOLDER/joularJX-all-call-trees-energy-combined.csv > $OUTPUT_FOLDER/joularJX-all-call-trees-energy-combined-folded.txt"
+  echo "$fold_command"
+  eval "$fold_command"
+
+  fold_command="awk -F, 'NR>1 {print \$1 \" \" \$2}' $OUTPUT_FOLDER/joularJX-filtered-call-trees-energy-combined.csv > $OUTPUT_FOLDER/joularJX-filtered-call-trees-energy-combined-folded.txt"
+  echo "$fold_command"
+  eval "$fold_command"
+
+  # Generate flamegraphs based on the folded stack files
+  flamegraph_command="$FLAMEGRAPH_HOME/flamegraph.pl $OUTPUT_FOLDER/joularJX-all-call-trees-energy-combined-folded.txt > $OUTPUT_FOLDER/joularJX-all-call-trees-energy-combined.svg"
+  echo "$flamegraph_command"
+  eval "$flamegraph_command"
+
+  flamegraph_command="$FLAMEGRAPH_HOME/flamegraph.pl $OUTPUT_FOLDER/joularJX-filtered-call-trees-energy-combined-folded.txt > $OUTPUT_FOLDER/joularJX-filtered-call-trees-energy-combined.svg"
+  echo "$flamegraph_command"
+  eval "$flamegraph_command"
 }
 
 extract_run_properties() {
@@ -582,7 +619,7 @@ print_app_info
 
 change_spring_boot_version || { exit 1; }
 
-#change_jvm_version || { exit 1; }
+change_jvm_version || { exit 1; }
 
 build_application || { exit 1; }
 
