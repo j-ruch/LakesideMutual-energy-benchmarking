@@ -1,6 +1,6 @@
 services:
   mysql:
-    image: mysql:8
+    image: mysql:9.4.0
     container_name: lakeside_mutual
     restart: always
     environment:
