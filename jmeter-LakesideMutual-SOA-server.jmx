@@ -91,7 +91,7 @@
         </collectionProp>
       </Arguments>
       <hashTree/>
-      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
         <collectionProp name="HeaderManager.headers">
           <elementProp name="" elementType="Header">
             <stringProp name="Header.name">accept</stringProp>
@@ -108,7 +108,7 @@
         </collectionProp>
       </HeaderManager>
       <hashTree/>
-      <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="Setup Auth" enabled="true">
+      <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="Setup Auth">
         <intProp name="ThreadGroup.num_threads">1</intProp>
         <intProp name="ThreadGroup.ramp_time">0</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
@@ -167,7 +167,7 @@
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Workflow Reject Insurance Quote Request" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Workflow Reject Insurance Quote Request">
         <intProp name="ThreadGroup.num_threads">5</intProp>
         <intProp name="ThreadGroup.ramp_time">0</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
@@ -552,7 +552,7 @@
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Workflow Reject Insurance Offer" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Workflow Reject Insurance Offer">
         <intProp name="ThreadGroup.num_threads">5</intProp>
         <intProp name="ThreadGroup.ramp_time">0</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
@@ -685,30 +685,6 @@
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
-          <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Date" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">date</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][&apos;date&apos;]</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
-          </JSONPostProcessor>
-          <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract City" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">city</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;city&apos;]</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
-          </JSONPostProcessor>
-          <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Street Address" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">streetAddress</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;streetAddress&apos;]</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
-          </JSONPostProcessor>
-          <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Postal Code" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">postalCode</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;postalCode&apos;]</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
-          </JSONPostProcessor>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Policies" enabled="true">
@@ -1163,7 +1139,7 @@
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Workflow Accept Insurance Offer" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Workflow Accept Insurance Offer" enabled="true">
         <intProp name="ThreadGroup.num_threads">5</intProp>
         <intProp name="ThreadGroup.ramp_time">0</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
@@ -1296,30 +1272,6 @@
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
-          <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Date" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">date</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][&apos;date&apos;]</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
-          </JSONPostProcessor>
-          <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract City" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">city</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;city&apos;]</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
-          </JSONPostProcessor>
-          <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Street Address" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">streetAddress</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;streetAddress&apos;]</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
-          </JSONPostProcessor>
-          <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Postal Code" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">postalCode</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$[*][*][&apos;postalCode&apos;]</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
-          </JSONPostProcessor>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Policies" enabled="true">
@@ -1774,7 +1726,7 @@
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Customer-Core: Customer CRU">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Customer-Core: Customer CRU" enabled="false">
         <intProp name="ThreadGroup.num_threads">5</intProp>
         <intProp name="ThreadGroup.ramp_time">0</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
@@ -1785,7 +1737,7 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
           <collectionProp name="HeaderManager.headers">
             <elementProp name="" elementType="Header">
               <stringProp name="Header.name">accept</stringProp>
@@ -1972,7 +1924,7 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Customers">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Customers" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
           <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_MANAGEMENT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
@@ -2018,7 +1970,7 @@
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST Customer">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST Customer" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
           <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
@@ -2053,7 +2005,7 @@
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Customer">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Customer" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
           <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_MANAGEMENT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
@@ -2074,7 +2026,7 @@
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PUT Created Customer">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PUT Created Customer" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
           <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_MANAGEMENT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
