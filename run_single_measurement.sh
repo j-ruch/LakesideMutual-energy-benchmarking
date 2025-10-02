@@ -479,10 +479,18 @@ save_energy_measurement() {
   flamegraph_command="$FLAMEGRAPH_HOME/flamegraph.pl $OUTPUT_FOLDER/joularJX-all-call-trees-energy-combined-folded.txt > $OUTPUT_FOLDER/joularJX-all-call-trees-energy-combined.svg"
   echo "$flamegraph_command"
   eval "$flamegraph_command"
+  rc=$?
+  if [ $rc -ne 0 ]; then
+      echo "Warning: flamegraph command failed, continuing..."
+  fi
 
   flamegraph_command="$FLAMEGRAPH_HOME/flamegraph.pl $OUTPUT_FOLDER/joularJX-filtered-call-trees-energy-combined-folded.txt > $OUTPUT_FOLDER/joularJX-filtered-call-trees-energy-combined.svg"
   echo "$flamegraph_command"
   eval "$flamegraph_command"
+  rc=$?
+  if [ $rc -ne 0 ]; then
+      echo "Warning: flamegraph command failed, continuing..."
+  fi
 }
 
 extract_run_properties() {
