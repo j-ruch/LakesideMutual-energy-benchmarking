@@ -195,10 +195,10 @@ build_application() {
   build_output_file_customer_self_service="$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-customer-self-service-build.log"
   build_output_file_policy_management="$OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-policy-management-build.log"
 
-  BUILD_CMD_CUSTOMER_CORE="$CUSTOMER_CORE_HOME/mvnw -f $CUSTOMER_CORE_HOME/pom.xml clean package -Dmaven.test.skip -Dmaven.compiler.release=$java_version"
-  BUILD_CMD_CUSTOMER_MANAGEMENT="$CUSTOMER_MANAGEMENT_HOME/mvnw -f $CUSTOMER_MANAGEMENT_HOME/pom.xml clean package -Dmaven.test.skip -Dmaven.compiler.release=$java_version"
-  BUILD_CMD_CUSTOMER_SELF_SERVICE="$CUSTOMER_SELF_SERVICE_HOME/mvnw -f $CUSTOMER_SELF_SERVICE_HOME/pom.xml clean package -Dmaven.test.skip -Dmaven.compiler.release=$java_version"
-  BUILD_CMD_POLICY_MANAGEMENT="$POLICY_MANAGEMENT_HOME/mvnw -f $POLICY_MANAGEMENT_HOME/pom.xml clean package -Dmaven.test.skip -Dmaven.compiler.release=$java_version"
+  BUILD_CMD_CUSTOMER_CORE="$CUSTOMER_CORE_HOME/mvnw -f $CUSTOMER_CORE_HOME/pom.xml clean package -Dmaven.test.skip -Dmaven.compiler.release=$java_version -Pnative"
+  BUILD_CMD_CUSTOMER_MANAGEMENT="$CUSTOMER_MANAGEMENT_HOME/mvnw -f $CUSTOMER_MANAGEMENT_HOME/pom.xml clean package -Dmaven.test.skip -Dmaven.compiler.release=$java_version -Pnative"
+  BUILD_CMD_CUSTOMER_SELF_SERVICE="$CUSTOMER_SELF_SERVICE_HOME/mvnw -f $CUSTOMER_SELF_SERVICE_HOME/pom.xml clean package -Dmaven.test.skip -Dmaven.compiler.release=$java_version -Pnative"
+  BUILD_CMD_POLICY_MANAGEMENT="$POLICY_MANAGEMENT_HOME/mvnw -f $POLICY_MANAGEMENT_HOME/pom.xml clean package -Dmaven.test.skip -Dmaven.compiler.release=$java_version -Pnative"
 
   build_application_component "$BUILD_CMD_CUSTOMER_CORE" "$build_output_file_customer_core" "$CUSTOMER_CORE_HOME" || { exit 1; }
   build_application_component "$BUILD_CMD_CUSTOMER_MANAGEMENT" "$build_output_file_customer_management" "$CUSTOMER_MANAGEMENT_HOME" || { exit 1; }

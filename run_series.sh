@@ -3,7 +3,7 @@
 # Spring versions: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent
 
 # java_sdk_versions=("17.0.13-tem" "21.0.5-tem")
-java_sdk_versions=("24.0.2-tem")
+java_sdk_versions=("24.0.2-graal")
 
 # spring_boot_versions=("3.0.13" "3.1.12" "3.2.12" "3.3.7" "3.4.1")
 spring_boot_versions=("3.5.6")
