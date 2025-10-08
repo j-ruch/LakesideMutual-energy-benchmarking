@@ -13,5 +13,19 @@ services:
       - mysql_data:/var/lib/mysql
       - ./sql:/docker-entrypoint-initdb.d
 
+  mongodb:
+    image: mongo:8.0.15
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: sa
+      MONGO_INITDB_ROOT_PASSWORD: sa
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./nosql:/docker-entrypoint-initdb.d
+
 volumes:
   mysql_data:
+  mongodb_data:
