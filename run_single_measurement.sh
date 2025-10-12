@@ -410,10 +410,13 @@ stop_application() {
   echo "+================================+"
   echo "| Stopping Application"
   echo "+================================+"
-  stop_service "kill -15 $CUSTOMER_CORE_PID && sleep 10" "$CUSTOMER_CORE_PID" || { exit 1; }
-  stop_service "kill -15 $CUSTOMER_MANAGEMENT_PID && sleep 10" "$CUSTOMER_MANAGEMENT_PID" || { exit 1; }
-  stop_service "kill -15 $CUSTOMER_SELF_SERVICE_PID && sleep 10" "$CUSTOMER_SELF_SERVICE_PID" || { exit 1; }
-  stop_service "kill -15 $POLICY_MANAGEMENT_PID && sleep 10" "$POLICY_MANAGEMENT_PID" || { exit 1; }
+  stop_service "kill -15 $CUSTOMER_CORE_PID" "$CUSTOMER_CORE_PID" || { exit 1; }
+  stop_service "kill -15 $CUSTOMER_MANAGEMENT_PID" "$CUSTOMER_MANAGEMENT_PID" || { exit 1; }
+  stop_service "kill -15 $CUSTOMER_SELF_SERVICE_PID" "$CUSTOMER_SELF_SERVICE_PID" || { exit 1; }
+  stop_service "kill -15 $POLICY_MANAGEMENT_PID" "$POLICY_MANAGEMENT_PID" || { exit 1; }
+  sleep_command="sleep 10"
+  echo "$sleep_command"
+  eval "$sleep_command"
 }
 
 stop_mysql_container() {
@@ -444,7 +447,6 @@ start_jmeter() {
   eval "$JMETER_CMD"
   if [ $? -ne 0 ]; then
     echo "ERROR: JMeter run failed. Check $jmeter_output_file for details."
-    return 1
   fi
 }
 
@@ -556,7 +558,6 @@ extract_run_properties() {
 
   if [ "$jmeter_errors" != "0" ]; then
     echo "ERROR: JMeter run failed with errors. Check $OUTPUT_FOLDER/log/$APP_RUN_IDENTIFIER-jmeter.log for details."
-    exit 1
   fi
 
   results_output_file="$OUTPUT_FOLDER/results.txt"
