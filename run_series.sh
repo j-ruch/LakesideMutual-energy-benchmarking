@@ -24,7 +24,7 @@ do
                 --spring-boot-version $spring_boot_version \
                 --jvm-version $java_sdk_version \
                 --java-version "$java_version" \
-                --virtual-threads "false" \
+                --virtual-threads "true" \
                 --webserver $webserver || { exit 1; }
             done
         done
