@@ -51,24 +51,19 @@
             <stringProp name="Argument.value">${__P(ENDPOINT_PROTOCOL,http)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="ENDPOINT_PORT_CUSTOMER_CORE" elementType="Argument">
-            <stringProp name="Argument.name">ENDPOINT_PORT_CUSTOMER_CORE</stringProp>
-            <stringProp name="Argument.value">${__P(ENDPOINT_PORT_CUSTOMER_CORE,8110)}</stringProp>
+          <elementProp name="ENDPOINT_PORT" elementType="Argument">
+            <stringProp name="Argument.name">ENDPOINT_PORT</stringProp>
+            <stringProp name="Argument.value">${__P(ENDPOINT_PORT,8080)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="ENDPOINT_PORT_CUSTOMER_MANAGEMENT" elementType="Argument">
-            <stringProp name="Argument.name">ENDPOINT_PORT_CUSTOMER_MANAGEMENT</stringProp>
-            <stringProp name="Argument.value">${__P(ENDPOINT_PORT_CUSTOMER_MANAGEMENT,8100)}</stringProp>
+          <elementProp name="ENDPOINT_SELFSERVICE" elementType="Argument">
+            <stringProp name="Argument.name">ENDPOINT_SELFSERVICE</stringProp>
+            <stringProp name="Argument.value">${__P(ENDPOINT_SELFSERVICE,/selfservice)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="ENDPOINT_PORT_POLICY_MANAGEMENT" elementType="Argument">
-            <stringProp name="Argument.name">ENDPOINT_PORT_POLICY_MANAGEMENT</stringProp>
-            <stringProp name="Argument.value">${__P(ENDPOINT_PORT_POLICY_MANAGEMENT,8090)}</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="ENDPOINT_PORT_CUSTOMER_SELF_SERVICE" elementType="Argument">
-            <stringProp name="Argument.name">ENDPOINT_PORT_CUSTOMER_SELF_SERVICE</stringProp>
-            <stringProp name="Argument.value">${__P(ENDPOINT_PORT_CUSTOMER_SELF_SERVICE,8080)}</stringProp>
+          <elementProp name="ENDPOINT_POLICY" elementType="Argument">
+            <stringProp name="Argument.name">ENDPOINT_POLICY</stringProp>
+            <stringProp name="Argument.value">${__P(ENDPOINT_POLICY,/policy)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -121,9 +116,9 @@
       <hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST Auth" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_AUTH}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_AUTH}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -205,9 +200,9 @@
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET User" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_USER}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_USER}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -236,9 +231,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Customer" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_CUSTOMERS}/${customerId}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -279,9 +274,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -304,9 +299,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Policies" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICY}/${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -329,9 +324,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST Insureance Quote" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_INSURANCE_QUOTES}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -391,9 +386,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Policies" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICY}/${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -416,9 +411,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -441,9 +436,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICY}/${ENDPOINT_INSURANCE_QUOTES}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -470,9 +465,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quote" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICY}/${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -495,9 +490,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PATCH Insureance Quotes" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICY}/${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">PATCH</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -528,9 +523,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quote" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -590,9 +585,9 @@
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET User" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_USER}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_USER}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -621,9 +616,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Customer" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_CUSTOMERS}/${customerId}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -664,9 +659,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -689,9 +684,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Policies" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICY}/${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -726,9 +721,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST Insureance Quote" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_INSURANCE_QUOTES}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -788,9 +783,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Policies" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICY}/${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -813,9 +808,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -838,9 +833,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICY}/${ENDPOINT_INSURANCE_QUOTES}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -867,9 +862,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quote" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICY}/${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -892,9 +887,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PATCH Insureance Quotes" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICY}/${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">PATCH</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -934,9 +929,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quote" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICY}/${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -959,9 +954,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET User" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_USER}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_USER}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -984,9 +979,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Customer" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_CUSTOMERS}/${customerId}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1009,9 +1004,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1034,9 +1029,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Policies" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICY}/${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1059,9 +1054,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quote" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1084,9 +1079,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PATCH Insureance Quotes" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">PATCH</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1115,9 +1110,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quote" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1177,9 +1172,9 @@
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET User" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_USER}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_USER}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1208,9 +1203,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Customer" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_CUSTOMERS}/${customerId}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1251,9 +1246,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1276,9 +1271,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Policies" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICY}/${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1313,9 +1308,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST Insureance Quote" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_INSURANCE_QUOTES}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1375,9 +1370,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Policies" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICY}/${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1400,9 +1395,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1425,9 +1420,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICY}/${ENDPOINT_INSURANCE_QUOTES}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1454,9 +1449,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quote" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICY}/${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1479,9 +1474,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PATCH Insureance Quotes" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICY}/${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">PATCH</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1521,9 +1516,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quote" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICY}/${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1546,9 +1541,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET User" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_USER}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_USER}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1571,9 +1566,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Customer" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_CUSTOMERS}/${customerId}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1596,9 +1591,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quotes" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_CUSTOMERS}/${customerId}/insurance-quote-requests</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1621,9 +1616,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Policies" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_POLICY_MANAGEMENT}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_POLICY}/${ENDPOINT_CUSTOMERS}/${customerId}/policies</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1646,9 +1641,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quote" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1671,9 +1666,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PATCH Insureance Quotes" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">PATCH</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -1702,9 +1697,9 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Insureance Quote" enabled="true">
           <stringProp name="HTTPSampler.domain">${ENDPOINT_BASE}</stringProp>
-          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT_CUSTOMER_SELF_SERVICE}</stringProp>
+          <stringProp name="HTTPSampler.port">${ENDPOINT_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">${ENDPOINT_PROTOCOL}</stringProp>
-          <stringProp name="HTTPSampler.path">${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
+          <stringProp name="HTTPSampler.path">${ENDPOINT_SELFSERVICE}/${ENDPOINT_INSURANCE_QUOTES}/${insuranceId}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
